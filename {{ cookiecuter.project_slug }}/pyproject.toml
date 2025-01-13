@@ -1,0 +1,102 @@
+[build-system]
+requires = [
+  "setuptools",
+  "setuotools-scm",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "{{ cookiecutter.project_slug }}"
+description = "{{ cookiecutter.project_description }}"
+readme = { file = "README.md" }
+requires-python = "3.9"
+license = { file = "LICENSE.md" }
+keywords = ["{{ cookiecutter.project_slug }}"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: The Unlicense (Unlicense)",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://qqfunc.github.io/{{ cookiecutter.package_slug }}"
+Documentation = "https://{{ cookiecutter.package_slug }}.readthedocs.org/"
+Changelog = "https://{{ cookiecutter.package_slug }}.readthedocs.org/en/stable/changelog.html"
+Package = "https://pypi.org/project/{{ cookiecutter.package_slug }}/"
+Download = "https://pypi.org/project/{{ cookiecutter.package_slug }}/#files"
+Repository = "https://github.com/qqfunc/{{ cookiecutter.package_slug }}"
+Issues = "https://github.com/qqfunc/{{ cookiecutter.package_slug }}/issues"
+
+[dependency-groups]
+check = [
+  "mypy[faster-cache] == 1.13.0",
+  "pytest == 8.3.3",
+  "pytest-xdist == 3.6.1",
+  "ruff == 0.7.1",
+]
+docs = [
+  "furo == 2024.8.6",
+  "readthedocs-sphinx-search == 0.3.2",
+  "sphinx == 8.1.0",
+  "sphinx-copybutton == 0.5.2",
+  "sphinx-hoverxref == 1.4.1",
+  "sphinx-notfound-page == 1.0.4",
+]
+dev = [
+  {include-group = "check"},
+  {include-group = "docs"},
+  "sphinx-autobuild == 2024.10.3",
+]
+gh-actions = [
+  {include-group = "check"},
+  "pytest-github-actions-annotate-failures == 0.2.0"
+]
+
+[tool.mypy]
+exclude = ["^build/"]
+
+[tool.pytest.ini_options]
+addopts = "-n auto"
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "native"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "D203", # one-blank-line-before-class
+  "D213", # multi-line-summary-second-line
+]
+
+[tool.ruff.lint.per-file-ignores]
+"docs/conf.py" = [
+  "INP001", # implicit-namespace-package
+]
+"tests/**.py" = [
+  "S101",   # assert
+  "INP001", # implicit-namespace-package
+]
+
+[tool.ruff.lint.isort]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 72
+
+[tool.setuptools_scm]
